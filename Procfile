@@ -1,1 +1,2 @@
-web: gunicorn evomats.py
+web: gunicorn app:app
+init: python evomats.py
