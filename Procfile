@@ -1,1 +1,1 @@
-web: python evomats.py
+web: gunicorn evomats.py
