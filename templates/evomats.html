@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>evomats</title>
+  </head>
+  <body>
+    <div>
+      <!-- Note the "-" before the "%}"; this instructs Jinja to strip whitespace so there
+      are no spaces between the <div>s. -->
+      {% for iconURL in iconURLs -%}
+        <div class="card">
+            <p> {{names}} </p>
+            <img src={{iconURL}}>
+        </div>
+      {%- endfor %}
+    </div>
+    <a href = "/index.html"><p>Back to table of contents</p></a>
+  </body>
+</html>
