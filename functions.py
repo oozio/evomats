@@ -173,7 +173,8 @@ def collect_mats(id, mats, seen, prevs, bases, i):
      enhances = enhancemats()
      weekdays = weekday()
      bases = flatten(bases)
-     prevs = flatten(prevs)    
+     prevs = flatten(prevs)
+         
      for evomat in evomats:
           if evomat not in seen and evomat not in enhances and evomat not in weekdays:
                seen.append(evomat)
