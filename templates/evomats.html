@@ -7,11 +7,12 @@
     <div>
       <!-- Note the "-" before the "%}"; this instructs Jinja to strip whitespace so there
       are no spaces between the <div>s. -->
+      <p> You need: </p>
+      {% for name in names | batch(2) %}  
+          <p> {{name[1]}} x {{name[0]|string}} </p>
+      {%- endfor %}
       {% for iconURL in iconURLs -%}
-        <div class="card">
-            <p> {{names}} </p>
-            <img src={{iconURL}}>
-        </div>
+       <img src={{iconURL}}>
       {%- endfor %}
     </div>
     <a href = "/index.html"><p>Back to table of contents</p></a>
