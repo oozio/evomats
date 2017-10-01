@@ -10,18 +10,6 @@ from functions import *
 from forms import *
 app = Flask(__name__)
 
-from rq import Queue
-from redis import Redis
-
-# Tell RQ what Redis connection to use
-redis_conn = Redis()
-q = Queue(connection=redis_conn)  # no args implies the default queue
-
-# Delay execution of count_words_at_url('http://nvie.com')
-q.enqueue_call(func=collectmats,args=('http://www.puzzledragonx.com',),timeout=300)
-
-
-
 @app.route("/", methods = ['GET', 'POST'])
 @app.route('/index.html', methods = ["GET","POST"])
 def index_page():
