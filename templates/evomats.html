@@ -11,8 +11,15 @@
       {% for name in names | batch(2) %}  
           <p> {{name[1]}} x {{name[0]|string}} </p>
       {%- endfor %}
+      
+      
+      
       {% for iconURL in iconURLs -%}
-       <img src={{iconURL}}>
+          {% if iconURL == 'break' %}
+               <p> </p>
+          {% else %}
+               <span>       <img src={{iconURL}}> </span>
+          {% endif %}
       {%- endfor %}
     </div>
     <a href = "/index.html"><p>Back to table of contents</p></a>

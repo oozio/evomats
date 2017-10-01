@@ -23,20 +23,20 @@ def evomats_page():
 #    print "prevvv" + str(prev)
 #   mats = findmats(id, [id], [], 0)
 #    mats = collect_mats(id, [], [id],[],[], 0,[],[])
-    mats = collectmats(id,[])
+    mats,pictures = collectmats(id,[id],[],[id])
     iconURL = []
     names = []
     print 'getting pics'
-    for n in mats:
-        if n:
-          #print 'n'+ str(n)
-          names.append(getInfo(n)[1])
-          iconURL.append(getInfo(n)[0])
-  #  print iconURL
+
+    for n in pictures:
+        info = getInfo(n)
+        if n in mats:
+          names.append(info[1])
+        iconURL.append(info[0])
     names[:] = [x[2:-2] for x in names]
    
    # print 'wtf'+str(names)
-    occur = [[str(x),names.count(x)] for x in set(names)]
+    occur = [[str(x),names.count(x)] for x in set(names) if x != 'e']
     occur = [item for sublist in occur for item in sublist]     
    # print 'ocur' + str(occur)
     return render_template("/evomats.html", iconURLs = iconURL, names = occur)

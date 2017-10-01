@@ -6,7 +6,7 @@ import os
 import collections
 from profilestats import profile
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def weekday():
      page = requests.get('http://www.puzzledragonx.com/en/monsterbook.asp?t1=7&ue=0&s1=1&s2=1&o1=1&o2=1&o3=1&t=1')
      tree = html.fromstring(page.content)
@@ -21,7 +21,7 @@ global weekdays
 weekdays = weekday()
 
 global infos
-infos = {}
+infos = {'break':['break', 'break']}
 def getInfo(id):
      info = infos.get(str(id))
      if not info:
@@ -33,7 +33,7 @@ def getInfo(id):
      return info
 
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def enhancemats():
      page = requests.get('http://puzzledragonx.com/en/monsterbook.asp?t1=8&ue=0&s1=1&s2=1&o1=1&o2=1&o3=1')
      tree = html.fromstring(page.content)
@@ -50,7 +50,7 @@ enhances = enhancemats()
 global trees
 trees = {}
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def getTree(id):
      tree = trees.get(str(id))
      if not tree:
@@ -62,7 +62,7 @@ def getTree(id):
           trees[str(id)] = tree  
      return tree 
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def flatten(aList):
     t = []
     for i in aList:
@@ -72,7 +72,7 @@ def flatten(aList):
              t.extend(flatten(i))
     return t
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def prevEvos(id, prev,tree):
      
      arrow_left = []
@@ -135,7 +135,7 @@ def prevEvos(id, prev,tree):
        #   # print ""
      return prev
 
-@profile(print_stats=10, sort_stats='time')
+#@profile(print_stats=10, sort_stats='time')
 def findmats(id,tree):
      ## print "finding mats"
    #  # print "got tree in findmats"
@@ -181,24 +181,36 @@ def findmats(id,tree):
 #     return findmats(seen[i+1], seen, mats, i+1)
      return evomats
 
-@profile(print_stats=10, sort_stats='time')
-def collectmats(id,final):
- #    print 'start'+str(os.times())
+#@profile(print_stats=10, sort_stats='time')
+def collectmats(id,final,hasmore,pictures):
      tree = getTree(id)
+     
      temp = findmats(id,tree)
      prev = prevEvos(id, [],tree)
-  #   if prev: 
-  #        prev = prev[0]
+     
      temp.append(prev)
-  #   temp.append('\n')
+     
      temp = flatten(temp)
      final.append(temp)
      final = flatten(final)
-   #  print 'start loop'+str(os.times())
+     pictures.append(temp)
+     pictures = flatten(pictures)
+     
+     if not temp:
+          pictures.append('break')
+
      for each in temp:
-          if each not in enhances and each not in weekdays and each != '\n':
-               final =  collectmats(each,final)
-  #   print 'end loop'+str(os.times())
-     return final
+          if each not in enhances and each not in weekdays:
+               hasmore.append(id)
+               hasmore = flatten(hasmore)
+               pictures.append('break')
+               final,pictures =  collectmats(each,final,hasmore,pictures)
+          
+  
+     final = [x for x in final if x not in hasmore]
+     final = flatten(final)
+     pictures = flatten(pictures)
+ 
+     return [final,pictures]
 
      
