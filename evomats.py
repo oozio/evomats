@@ -16,6 +16,11 @@ def index_page():
     form = idForm(request.form) 
     return render_template("/index.html", form = form)  
 
+@app.route("/faq.html",methods=["GET"])
+def faq_page():
+     return render_template("/faq.html")
+
+
 @app.route("/evomats.html", methods = ['GET','POST'])
 def evomats_page():
     id = request.form.get('mons_id', None)
@@ -23,7 +28,7 @@ def evomats_page():
 #    print "prevvv" + str(prev)
 #   mats = findmats(id, [id], [], 0)
 #    mats = collect_mats(id, [], [id],[],[], 0,[],[])
-    mats,pictures = collectmats(id,[id],[],[id])
+    mats,pictures = collectmats(id,[id,'break'],[],[id,'break'])
     iconURL = []
     names = []
     print 'getting pics'
@@ -34,11 +39,14 @@ def evomats_page():
           names.append(info[1])
         iconURL.append(info[0])
     names[:] = [x[2:-2] for x in names]
-   
-   # print 'wtf'+str(names)
+
     occur = [[str(x),names.count(x)] for x in set(names) if x != 'e']
-    occur = [item for sublist in occur for item in sublist]     
-   # print 'ocur' + str(occur)
+     
+    occur.sort(key=lambda tup: tup[0])
+  #  print 'sorted'+str(occur)
+    occur = [item for sublist in occur for item in sublist]
+  #  print 'ocur' + str(occur)
+ #   occur.sort(key=lambda tup: tup[1])
     return render_template("/evomats.html", iconURLs = iconURL, names = occur)
 if __name__ == "__main__":
     sys.stderr.write("Ready.\n");

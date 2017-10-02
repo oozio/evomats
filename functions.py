@@ -79,56 +79,71 @@ def prevEvos(id, prev,tree):
      arrow_left_awokens = []
      arrow_right = []
      arrow_away = []
+     arrow_new_awoken = []
      
 #     # print "begin prev" + str(prev) + "id" + str(id)
      possible_left = "img/evolvearrow2.png" # a straigt line???
      possible_left_awoken = "img/evolvearrow8.png" #yellow pointing to the right from the left
      possible_left_awoken_1 = "img/evolvearrow9.png" #same 
-     
+     possible_new_awoken = 'img/evolvearrow10.png'
      possible_right = "img/evolvearrow7.png" #kinked L arrow to the left from the right
      possible_right_1 = "img/evolvearrow6.png" #arrow in the middle of a line              
 
      o = len(tree.xpath('//div[@class = "evolveframe"]/img[contains(@src,stuff)]/ancestor::td[@class = "evolve"]/preceding-sibling::td[@class = "evolve"]'))
-#     # print ' prev oo' + str(o)
+   #  print ' prev oo' + str(o)
 
      arrow_left = tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, id)]/ancestor::td[@class = "evolve"]/preceding-sibling::td[position()=1]/descendant::img/@data-original')
-#     # print "arrow left"+str(arrow_left)
+   #  print "arrow left"+str(arrow_left)
      
      arrow_left_awokens =  tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, id)]/ancestor::td[@colspan = 2]/preceding-sibling::td[position()=1]/descendant::img/@data-original')
-#     # print "arrow left a"+str(arrow_left_awokens)
+    # print "arrow left a"+str(arrow_left_awokens)
 
 
      arrow_right = tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, id)]/ancestor::td[@class = "evolve"]/following::td[position()=1]/div[@class = "arrowspace2"]/*/@data-original')
-#     # print "arrow right"+str(arrow_right)
+     #print "arrow right"+str(arrow_right)
+
+     arrow_new_awoken = tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, id)]/ancestor::td[@colspan = 2]/descendant::td[position()=1]/descendant::img/@data-original')
+     #print 'arrow new awoken' + str(arrow_new_awoken)
+     
+     
      
      
      arrow_away = tree.xpath('//div[@class = "evolveframe"]/descendant::img[contains(@src, id)]/ancestor::td[@class ="evolve"]/following-sibling::td[position()=1]/descendant::div[contains(@class, "arrow")]/child::*/@data-original')
-#     # print "arrow away"+str(arrow_away)
-     if possible_left in arrow_left:
+     #print "arrow away"+str(arrow_away)
+     
+     if possible_new_awoken in arrow_new_awoken:
+        #  print 'YES'    
+          name_new_awoken = tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, id)]/ancestor::td[@colspan = 2]/parent::tr/preceding-sibling::tr[position()=1]/descendant::img/@data-original')
+          id_new_awoken = str(''.join(list(filter(str.isdigit, name_new_awoken[0]))))
+          prev.append(id_new_awoken)
+     
+     elif possible_left in arrow_left:
           name_left = tree.xpath('//div[@class = "evolveframe"]/descendant::img[contains(@src, id)]/ancestor::td[@class = "evolve"]/preceding-sibling::td[position()=2]/descendant::img/@data-original')
           id_left = str(''.join(list(filter(str.isdigit, name_left[o-1])))) 
- #         # print "name left"+id_left
+      #    print "name left"+id_left
           prev.append(id_left)
           #return prevEvos(id_left, prev)
      elif possible_left_awoken in arrow_left_awokens: 
           name_awoken = tree.xpath('//div[contains(@class, "arrow")]/img[contains(@data-original, "arrow8")]/ancestor::div[@class = "arrowspace2"]/../preceding-sibling::td[position()=1]/div[@class = "evolveframe"]/descendant::*/@data-original')
           id_awoken = str(''.join(list(filter(str.isdigit, name_awoken[0]))))
-  #        # print "name awoken"+id_awoken
+        #  print "name awoken"+id_awoken
           prev.append(id_awoken)
        #   return prevEvos(id_awoken, prev)
      elif possible_left_awoken_1 in arrow_left_awokens:
           name_awoken = tree.xpath('//div[contains(@class, "arrow")]/img[contains(@data-original, "arrow9")]/ancestor::div[@class = "arrowspace2"]/../preceding-sibling::td[position()=1]/div[@class = "evolveframe"]/descendant::*/@data-original')
           id_awoken = str(''.join(list(filter(str.isdigit, name_awoken[0]))))
-   #       # print "name awoken"+id_awoken
+      #    print "name awoken"+id_awoken
           prev.append(id_awoken)
        #   return prevEvos(id_awoken, prev)
 
      elif possible_right in arrow_right or possible_right_1 in arrow_right:
           name_right = tree.xpath('//div[contains(@class, "arrow")]/img[contains(@data-original, "arrow4")]/ancestor::div[@class = "arrowspace2"]/../preceding-sibling::td[position()=1]/div[@class = "evolveframe"]/descendant::*/@data-original')
           id_right = str(''.join(list(filter(str.isdigit, name_right[0]))))
-         # # print "name right"+id_right    
+       #   print "name right"+id_right    
           prev.append(id_right)
       #    return prevEvos(id_right, prev)
+     
+     
      
      #else:
         #  # print "end prev" + str(prev) 
@@ -187,7 +202,7 @@ def collectmats(id,final,hasmore,pictures):
      
      temp = findmats(id,tree)
      prev = prevEvos(id, [],tree)
-     
+ #    print 'prev' + str(prev)
      temp.append(prev)
      
      temp = flatten(temp)
