@@ -33,7 +33,7 @@ def evomats_page():
 #    print "prevvv" + str(prev)
 #   mats = findmats(id, [id], [], 0)
 #    mats = collect_mats(id, [], [id],[],[], 0,[],[])
-    mats,pictures = collectmats(id,[id,'break'],[],[id,'break'])
+    mats,pictures = collectmats(id,[id,'break'],[id],[id,'break'])
     iconURL = []
     names = []
     print 'getting pics'
@@ -52,7 +52,7 @@ def evomats_page():
     occur = [item for sublist in occur for item in sublist]
   #  print 'ocur' + str(occur)
  #   occur.sort(key=lambda tup: tup[1])
-    return render_template("/evomats.html", iconURLs = iconURL, names = occur)
+    return render_template("/evomats.html", iconURLs = iconURL[:-1], names = occur, name = getInfo(id)[1][2:-2])
 if __name__ == "__main__":
     sys.stderr.write("Ready.\n");
     app.debug = True

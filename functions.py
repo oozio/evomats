@@ -200,10 +200,14 @@ def findmats(id,tree):
 def collectmats(id,final,hasmore,pictures):
      tree = getTree(id)
      
+     
      temp = findmats(id,tree)
      prev = prevEvos(id, [],tree)
  #    print 'prev' + str(prev)
      temp.append(prev)
+     
+     if len(temp) > 1:
+          pictures.append(id)
      
      temp = flatten(temp)
      final.append(temp)
