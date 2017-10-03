@@ -12,15 +12,31 @@ app = Flask(__name__)
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
-                               'favicon.ico', mimetype='image/png')
-
+    return send_from_directory(os.path.join(app.root_path, 'static', 'images'),'favicon.ico', mimetype='image/png')
+    
+@app.route('/style.css')
+def style():
+    return send_from_directory(os.path.join(app.root_path, 'templates'),'style.css')
+    
+@app.route('/jquery-1.9.1.min.js')
+def jsmin():
+    return send_from_directory(os.path.join(app.root_path, 'templates','js'),'jquery-1.9.1.min.js')
+    
+@app.route('/jquery.autocomplete.min.js')
+def jsauto():
+    return send_from_directory(os.path.join(app.root_path, 'templates','js'),'jquery.autocomplete.min.js')
+    
+@app.route('/monster-autocomplete.js')
+def monsters():
+    return send_from_directory(os.path.join(app.root_path, 'templates','js'),'monster-autocomplete.js')
+    
 @app.route("/", methods = ['GET', 'POST'])
 @app.route('/index.html', methods = ["GET","POST"])
 def index_page():
-    form = idForm(request.form) 
-    return render_template("/index.html", form = form)  
-
+     form = idForm(request.form) 
+     return render_template("/index.html", form = form)  
+ #    return render_template("/index.html")
+     
 @app.route("/faq.html",methods=["GET"])
 def faq_page():
      return render_template("/faq.html")
@@ -28,7 +44,8 @@ def faq_page():
 
 @app.route("/evomats.html", methods = ['GET','POST'])
 def evomats_page():
-    id = request.form.get('mons_id', None)
+    id = request.form.get('monster')
+    print str(id)+"dd"
 #   prev = prevEvos(id, [id])
 #    print "prevvv" + str(prev)
 #   mats = findmats(id, [id], [], 0)
