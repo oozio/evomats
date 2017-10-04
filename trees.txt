@@ -1,0 +1,12 @@
+(dp0
+S'1'
+p1
+ccopy_reg
+_reconstructor
+p2
+(clxml.html
+HtmlElement
+p3
+clxml.etree
+ElementBase
+p4

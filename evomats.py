@@ -78,7 +78,7 @@ def evomats_page():
  #   occur.sort(key=lambda tup: tup[1])
     return render_template("/evomats.html", iconURLs = iconURL[:-1], names = occur, name = getInfo(id)[1],bases = bases)
 if __name__ == "__main__":
-    sys.stderr.write("Ready.\n");
-    app.debug = True
+ #   sys.stderr.write("Ready.\n");
+    app.debug = False
     app.run()
 
