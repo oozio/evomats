@@ -3910,7 +3910,9 @@ $(function(){
     lookup: monsters,
     onSelect: function (suggestion) {
       var thehtml = '<strong>Monster Name:</strong> ' + suggestion.value + ' <br> <strong>ID:</strong> <span name="mons_id">' + suggestion.data+"</span>";
+      var data = suggestion.data; 
       $('#outputcontent').html(thehtml);
+       $('#monster_id').attr('value', data);
     }
   });
   

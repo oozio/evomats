@@ -20,8 +20,25 @@ def weekday():
 global weekdays 
 weekdays = weekday()
 
-global infos
-infos = {'break':['break', 'break']}
+#global infos
+#infos = {'break':['break', 'break']}
+
+#global ids
+#ids = {'break':'break'}
+
+def getIds(key):
+     if key == 'break':
+          return 'break'
+     else:
+          with open("monsterbook.txt") as f:
+               for line in f:
+                    if key in line and ', "[' in line:
+                         picture = line.split(', "[')[0][2:-1]
+                    elif key in line and ", '[" in line:
+                         picture = line.split(", '[")[0][2:-1]
+     nums = ''.join(c for c in picture if c.isdigit())
+     return nums
+
 def getInfo(id):
      key = id
      picture = ''
@@ -47,6 +64,7 @@ def getInfo(id):
                          name = line.split(", '[")[1][1:-5]
                          picture = line.split(", '[")[0][2:-1]
      return [picture,name]
+
 
 
 #@profile(print_stats=10, sort_stats='time')

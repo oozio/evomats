@@ -96,7 +96,10 @@ body {
 <p>
       
       <div id="searchfield">
-        <form method=post action="/evomats.html"><input type="text" name="monster" class="biginput" id="autocomplete" required>
+        <form method=post action="/evomats.html">
+        <input type="text"  class="biginput" id="autocomplete" required>
+  
+      <input type="hidden" id="monster_id" name="monster_id" value="" required >
   <p>
       </div><!-- @end #searchfield -->
       
@@ -123,7 +126,3 @@ body {
 </body>
 </html>
 
-<script type="text/javascript">
-    var mons_id = document.getElementByName('mons_id').value;
-    };
-</script>
