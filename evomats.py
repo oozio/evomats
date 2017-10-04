@@ -30,6 +30,10 @@ def jsauto():
 def monsters():
     return send_from_directory(os.path.join(app.root_path, 'templates','js'),'monster-autocomplete.js')
     
+@app.route('/error.html')
+def error():
+      return render_template("/error.html")                  
+      
 @app.route("/", methods = ['GET', 'POST'])
 @app.route('/index.html', methods = ["GET","POST"])
 def index_page():

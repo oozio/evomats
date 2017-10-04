@@ -67,12 +67,18 @@ global trees
 trees = {}
 
 #@profile(print_stats=10, sort_stats='time')
-def getTree(id):
+def getTree(id, curr=None):
      if id.isdigit():
           id = str(id)
-     
+  
      tree = trees.get(id)
      if not tree:
+          stuff = "/"+id+"."
+          if curr:
+               o = curr.xpath('//div[@class = "evolveframe"]/img[contains(@src,stuff)]')
+               if o:
+                    tree = curr
+                    
           url0 = "http://www.puzzledragonx.com/en/monster.asp?n="
           url = url0 + id
           
@@ -218,9 +224,12 @@ def findmats(id,tree):
      return evomats
 
 #@profile(print_stats=10, sort_stats='time')
-def collectmats(id,final,hasmore,pictures,bases):
-     tree = getTree(id)
+def collectmats(id,final,hasmore,pictures,bases,tree=None):
      
+     if id.isdigit():
+          id = str(id)
+          
+     tree = getTree(id,tree)
      
      temp = findmats(id,tree)
      prev = prevEvos(id, [],tree)
@@ -245,7 +254,7 @@ def collectmats(id,final,hasmore,pictures,bases):
                hasmore.append(id)
                hasmore = flatten(hasmore)
                pictures.append('break')
-               final,pictures,bases =  collectmats(each,final,hasmore,pictures,bases)
+               final,pictures,bases =  collectmats(each,final,hasmore,pictures,bases,tree)
           
   
      final = [x for x in final if x not in hasmore]
