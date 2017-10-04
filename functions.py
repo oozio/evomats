@@ -32,9 +32,9 @@ def getIds(key):
      else:
           with open("monsterbook.txt") as f:
                for line in f:
-                    if key in line and ', "[' in line:
+                    if "['"+key in line and ', "[' in line:
                          picture = line.split(', "[')[0][2:-1]
-                    elif key in line and ", '[" in line:
+                    elif '["'+key in line and ", '[" in line:
                          picture = line.split(", '[")[0][2:-1]
      nums = ''.join(c for c in picture if c.isdigit())
      return nums

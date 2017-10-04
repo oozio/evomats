@@ -45,10 +45,16 @@ def index_page():
 def faq_page():
      return render_template("/faq.html")
 
-
+@app.route("/inputerror.html",methods=["GET"])
+def inputerror_page():
+     return render_template("/inputerror.html", id = id)
+     
+     
 @app.route("/evomats.html", methods = ['GET','POST'])
 def evomats_page():
     id = request.form.get('monster_id')
+    if id == '0':
+         return redirect(url_for("inputerror_page", id=id))
     #print str(id)+"dd"
 #   prev = prevEvos(id, [id])
 #    print "prevvv" + str(prev)
