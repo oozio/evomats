@@ -45,31 +45,38 @@ def faq_page():
 @app.route("/evomats.html", methods = ['GET','POST'])
 def evomats_page():
     id = request.form.get('monster')
-    print str(id)+"dd"
+    #print str(id)+"dd"
 #   prev = prevEvos(id, [id])
 #    print "prevvv" + str(prev)
 #   mats = findmats(id, [id], [], 0)
 #    mats = collect_mats(id, [], [id],[],[], 0,[],[])
-    mats,pictures = collectmats(id,[id,'break'],[id],[id,'break'])
+    mats,pictures,bases = collectmats(id,[id,'break'],[id],[id,'break'],[])
     iconURL = []
     names = []
+    basenames = []
     print 'getting pics'
-
+    print 'start'+str(os.times())
     for n in pictures:
         info = getInfo(n)
         if n in mats:
           names.append(info[1])
         iconURL.append(info[0])
-    names[:] = [x[2:-2] for x in names]
-
-    occur = [[str(x),names.count(x)] for x in set(names) if x != 'e']
+    for n in bases:
+        info = getInfo(n)
+        basenames.append(info[0])
+    basenames = flatten(basenames)
+      #  print info[0]
+      #  print info[1]
+    occur = [[str(x),names.count(x)] for x in set(names) if x != 'break']
      
     occur.sort(key=lambda tup: tup[0])
   #  print 'sorted'+str(occur)
     occur = [item for sublist in occur for item in sublist]
+    print 'end'+str(os.times())
+    print basenames
   #  print 'ocur' + str(occur)
  #   occur.sort(key=lambda tup: tup[1])
-    return render_template("/evomats.html", iconURLs = iconURL[:-1], names = occur, name = getInfo(id)[1][2:-2])
+    return render_template("/evomats.html", iconURLs = iconURL[:-1], names = occur, name = getInfo(id)[1],bases = bases)
 if __name__ == "__main__":
     sys.stderr.write("Ready.\n");
     app.debug = True

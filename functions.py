@@ -23,14 +23,28 @@ weekdays = weekday()
 global infos
 infos = {'break':['break', 'break']}
 def getInfo(id):
-     info = infos.get(str(id))
-     if not info:
-          tree = getTree(id)
-          iconURL = "http://www.puzzledragonx.com/en/"+ str(tree.xpath('//div[@class = "avatar"]/img/@src')[0])
-          name = str(tree.xpath('//div[@class="name"]/h1/text()'))
-          info = [iconURL,name]
-          infos[str(id)] = info
-     return info
+     key = id
+     if id.isdigit():
+          key = '/'+str(id)+'.png'
+     if key == 'break':
+          return['break','break']
+     else:
+#     info = infos.get(str(id))
+ #    if not info:
+  #        tree = getTree(id)
+   #       iconURL = "http://www.puzzledragonx.com/en/"+ str(tree.xpath('//div[@class = "avatar"]/img/@src')[0])
+    #      name = str(tree.xpath('//div[@class="name"]/h1/text()'))
+     #     info = [iconURL,name]
+      #    infos[str(id)] = info
+          with open("monsterbook.txt") as f:
+               for line in f:
+                    if key in line and ', "[' in line:
+                         name = line.split(', "[')[1][1:-5]
+                         picture = line.split(', "[')[0][2:-1]
+                    elif key in line and ", '[" in line:
+                         name = line.split(", '[")[1][1:-5]
+                         picture = line.split(", '[")[0][2:-1]
+     return [picture,name]
 
 
 #@profile(print_stats=10, sort_stats='time')
@@ -197,7 +211,7 @@ def findmats(id,tree):
      return evomats
 
 #@profile(print_stats=10, sort_stats='time')
-def collectmats(id,final,hasmore,pictures):
+def collectmats(id,final,hasmore,pictures,bases):
      tree = getTree(id)
      
      
@@ -217,19 +231,21 @@ def collectmats(id,final,hasmore,pictures):
      
      if not temp:
           pictures.append('break')
+          bases.append(id)
 
      for each in temp:
           if each not in enhances and each not in weekdays:
                hasmore.append(id)
                hasmore = flatten(hasmore)
                pictures.append('break')
-               final,pictures =  collectmats(each,final,hasmore,pictures)
+               final,pictures,bases =  collectmats(each,final,hasmore,pictures,bases)
           
   
      final = [x for x in final if x not in hasmore]
      final = flatten(final)
      pictures = flatten(pictures)
+     bases = flatten(bases)
  
-     return [final,pictures]
+     return [final,pictures,bases]
 
      
