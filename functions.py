@@ -27,6 +27,7 @@ weekdays = weekday()
 #ids = {'break':'break'}
 
 def getIds(key):
+     picture = ''
      if key == 'break':
           return 'break'
      else:
