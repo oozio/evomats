@@ -24,6 +24,8 @@ global infos
 infos = {'break':['break', 'break']}
 def getInfo(id):
      key = id
+     picture = ''
+     name = ''
      if id.isdigit():
           key = '/'+str(id)+'.png'
      if key == 'break':
@@ -66,14 +68,17 @@ trees = {}
 
 #@profile(print_stats=10, sort_stats='time')
 def getTree(id):
-     tree = trees.get(str(id))
+     if id.isdigit():
+          id = str(id)
+     
+     tree = trees.get(id)
      if not tree:
           url0 = "http://www.puzzledragonx.com/en/monster.asp?n="
-          url = url0 + str(id)
+          url = url0 + id
           
           page = requests.get(url)
           tree = html.fromstring(page.content) 
-          trees[str(id)] = tree  
+          trees[id] = tree  
      return tree 
 
 #@profile(print_stats=10, sort_stats='time')
@@ -168,7 +173,9 @@ def prevEvos(id, prev,tree):
 def findmats(id,tree):
      ## print "finding mats"
    #  # print "got tree in findmats"
-     stuff = "/"+str(id)+"."
+     if id.isdigit():
+          id = str(id)
+     stuff = "/"+id+"."
      o = len(tree.xpath('//div[@class = "evolveframe"]/img[contains(@src,stuff)]/ancestor::td[@class = "evolve"]/preceding-sibling::td[@class = "evolve"]'))
   #   # print 'oo' + str(o)
      evomats = tree.xpath('//div[@class = "evolveframe"]/img[contains(@src, stuff)]/ancestor::td[@class = "evolve"]/preceding-sibling::*[position()=1]//a/@href')

@@ -1,2 +1,2 @@
-web: gunicorn evomats:app --timeout 25
+web: gunicorn evomats:app --timeout 250
 
