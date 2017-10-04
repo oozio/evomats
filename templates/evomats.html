@@ -103,11 +103,11 @@ body {
       <tr>
               <th> <b> # </b></th>
               <th><b> Evomat </b></th>            
-            </tr>            
+            </tr>    
       {% for name in names | batch(2) %}  
             <tr>
               <td>{{name[1]}}</td>
-              <td><a href='http://puzzledragonx.com/en/monster.asp?n={{ids[loop.index]}}'>{{name[0]|string}}</a></td> 
+              <td><a href='http://puzzledragonx.com/en/monster.asp?n={{ids[loop.index-1]}}'>{{name[0]|string}}</a></td> 
             </tr>
       {%- endfor %}
       </div>

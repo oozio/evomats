@@ -74,13 +74,15 @@ def evomats_page():
     #    print info[1]
     occur = [[str(x),names.count(x)] for x in set(names) if x != 'break']
   #  print occur
-    for each in occur:
-    #     print each
-         ids.append(getIds(each[0]))
-    ids = flatten(ids)
+
     occur.sort(key=lambda tup: tup[0])
   #  print 'sorted'+str(occur)
     occur = [item for sublist in occur for item in sublist]
+ #   print occur
+    for each in occur[::2]:
+#     print each
+        ids.append(getIds(each))
+        ids = flatten(ids)
    # print 'end'+str(os.times())
  #   print basenames
   #  print 'ocur' + str(occur)
