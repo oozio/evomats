@@ -54,8 +54,8 @@ def evomats_page():
     iconURL = []
     names = []
     basenames = []
-    print 'getting pics'
-    print 'start'+str(os.times())
+  #  print 'getting pics'
+   # print 'start'+str(os.times())
     for n in pictures:
         info = getInfo(n)
         if n in mats:
@@ -72,8 +72,8 @@ def evomats_page():
     occur.sort(key=lambda tup: tup[0])
   #  print 'sorted'+str(occur)
     occur = [item for sublist in occur for item in sublist]
-    print 'end'+str(os.times())
-    print basenames
+   # print 'end'+str(os.times())
+ #   print basenames
   #  print 'ocur' + str(occur)
  #   occur.sort(key=lambda tup: tup[1])
     return render_template("/evomats.html", iconURLs = iconURL[:-1], names = occur, name = getInfo(id)[1],bases = bases)
