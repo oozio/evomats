@@ -28,7 +28,7 @@ pyOpenSSL==16.2.0
 PySocks==1.5.7
 pytz==2016.10
 redis==2.10.6
-reportlab==3.3.0
+reportlab==3.5.55
 requests==2.13.0
 rq==0.8.2
 six==1.10.0
